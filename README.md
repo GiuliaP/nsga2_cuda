@@ -7,8 +7,8 @@ If you use this code, please cite the work where it is presented:
     author="D'Agostino, Daniele
     and Pasquale, Giulia
     and Merelli, Ivan",
-    title="A Fine-Grained CUDA Implementation of the            Multi-objective Evolutionary Approach NSGA-II: Potential Impact for Computational and Systems Biology Applications",
-    bookTitle="Computational Intelligence Methods for Bioinformatics and Biostatistics: 11th International Meeting, CIBB 2014, Cambridge, UK, June 26-28, 2014,     Revised Selected Papers",
+    title="A Fine-Grained CUDA Implementation of the Multi-objective Evolutionary Approach NSGA-II: Potential Impact for Computational and Systems Biology Applications",
+    bookTitle="Computational Intelligence Methods for Bioinformatics and Biostatistics: 11th International Meeting, CIBB 2014, Cambridge, UK, June 26-28, 2014, Revised Selected Papers",
     year="2015",
     publisher="Springer International Publishing",
     address="Cham",
