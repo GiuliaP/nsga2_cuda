@@ -1,0 +1,52 @@
+/*
+for (int i=0; i<size; i+=4) {
+        
+	p1[i/2] = tournament_device (old_pop, size, parent1[i], parent1[i+1]);
+    p1[i/2+1] = tournament_device (old_pop, size, parent1[i+2], parent1[i+3]);
+	realcross_device (old_pop, new_pop, size, p1[i/2], p1[i/2+1], i, i+1);
+
+	p2[i/2] = tournament_device (old_pop, size, parent2[i], parent2[i+1]);
+    p2[i/2+1] = tournament_device (old_pop, size, parent2[i+2], parent2[i+3]);
+	realcross_device (old_pop, new_pop, size, p2[i/2]a p2[i/2+1], i+2, i+3);   
+}
+*/
+
+__global__ void tournament_kernel (float* parent1, float* parent2, float* crowd_dist_loc, char* flag_loc, int* p) {
+
+	unsigned tid = threadIdx.x + blockIdx.x*blockDim.x; // da 0 a size/2-1
+
+	if (tid%2==0)
+		p[tid] = tournament_device (parent1[tid], parent1[tid+1], crowd_dist_loc, flag_loc);
+	else 
+		p[tid] = tournament_device (parent2[tid-1], parent2[tid], crowd_dist_loc, flag_loc);
+}
+
+__global__ void realcross_kernel (float* parent_x, float* child_x, int* p) {
+
+	unsigned tid = threadIdx.x + blockIdx.x*blockDim.x; // da 0 a size/2-1
+	unsigned idx = tid*2;
+
+	if (tid%2==0)
+		realcross_device (parent_x, child_x, p[idx], p[idx+2], idx, idx+1);
+	else 
+		realcross_device (parent_x, child_x, p[idx-1], p[idx+1], idx, idx+1);  
+}
+
+__global__ void tournament_kernel (float* parent, float* crowd_dist_loc, char* flag_loc, int* p) {
+
+	unsigned tid = threadIdx.x + blockIdx.x*blockDim.x; // da 0 a size/2-1
+	unsigned idx = tid*2;
+
+	p[tid] = tournament_device (parent[idx], parent[idx + 1], crowd_dist_loc, flag_loc);
+}
+
+__global__ void realcross_kernel (float* parent_x, float* child_x, int* p1, int* p2) {
+
+	unsigned tid = threadIdx.x + blockIdx.x*blockDim.x; // da 0 a size/2-1
+	unsigned idx = tid*2;
+
+	if (tid%2==0)
+		realcross_device (parent_x, child_x, p1[tid], p1[tid+1], idx, idx+1);
+	else
+		realcross_device (parent_x, child_x, p2[tid-1], p2[tid], idx, idx+1);  
+}
